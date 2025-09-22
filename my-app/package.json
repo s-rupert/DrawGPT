@@ -1,23 +1,34 @@
 {
-  "name": "my-app",
+  "name": "my-electron-app",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "main": "main.js",
+  "homepage": "./",
+  "author": "Rupesh Singh",
+  "license": "MIT",
+  "description": "A simple Electron app with Vite and React",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "electron": "electron .",
+    "start": "npm run dev && electron ."
   },
   "dependencies": {
+    "@tailwindcss/vite": "^4.1.5",
+    "dotenv": "^16.5.0",
+    "lucide-react": "^0.508.0",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "tailwindcss": "^4.1.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "@vitejs/plugin-react": "^4.4.1",
+    "electron": "^36.1.0",
     "eslint": "^9.25.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",

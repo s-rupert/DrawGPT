@@ -1,0 +1,224 @@
+import React, { useState } from "react";
+import {
+  Save,
+  Share,
+  Redo2,
+  Undo2,
+  ChevronDown,
+  ChevronUp,
+  UserRound,
+  Settings,
+  Image,
+  SquareDashedMousePointer,
+  PencilRuler,
+  Eraser,
+  Smile,
+  Ruler,
+} from "lucide-react";
+import Pencil from "../icons/Pencil";
+import Pencil1 from "../icons/Pencil1";
+import Pencil2 from "../icons/Pencil2";
+import Pencil3 from "../icons/Pencil3";
+import Pencil4 from "../icons/Pencil4";
+import Pencil5 from "../icons/Pencil5";
+import Pencil6 from "../icons/Pencil6";
+
+import Shapes from "../icons/Shapes";
+
+const Workshop = () => {
+  const [uiInterface, setUiInterface] = useState(true);
+  return (
+    <div className="relative w-full h-full">
+      <div className="flex justify-between bg-gray-500 text-white h-8">
+        <div className="flex flex-row h-8 text-white">
+          <div className="hover:text-black hover:bg-gray-400 py-1 px-3">
+            File
+          </div>
+          <div className="hover:text-black hover:bg-gray-400 py-1 px-3">
+            Edit
+          </div>
+          <div className="hover:text-black hover:bg-gray-400 py-1 px-3">
+            View
+          </div>
+          <Save
+            size={30}
+            className="hover:text-black hover:bg-gray-400 py-1 px-1 ml-3"
+          />
+          <Share
+            size={30}
+            className="hover:text-black hover:bg-gray-400 py-1 px-1 ml-3"
+          />
+          <Redo2
+            size={30}
+            className="hover:text-black hover:bg-gray-400 py-1 px-1 ml-3"
+          />
+          <Undo2
+            size={30}
+            className="hover:text-black hover:bg-gray-400 py-1 px-1 ml-3"
+          />
+        </div>
+        <div className="flex flex-row h-8 text-white">
+          <div onClick={() => setUiInterface(!uiInterface)}>
+            <ChevronDown
+              size={30}
+              className={`hover:text-black hover:bg-gray-400 py-1 px-1 ml-3 ${
+                uiInterface ? "" : "hidden"
+              }`}
+            />
+            <ChevronUp
+              size={30}
+              className={`hover:text-black hover:bg-gray-400 py-1 px-1 ml-3 ${
+                uiInterface ? "hidden" : ""
+              }`}
+            />
+          </div>
+          <div className="hover:text-black hover:bg-gray-400 py-1 px-3">
+            Transparent
+          </div>
+          <UserRound
+            size={30}
+            className="hover:text-black hover:bg-gray-400 py-1 px-1 ml-3"
+          />
+          <Settings
+            size={30}
+            className="hover:text-black hover:bg-gray-400 py-1 px-1 ml-3"
+          />
+        </div>
+      </div>
+      <div
+        className={`bg-gray-500 flex gap-[1px] ${
+          uiInterface ? "block" : "hidden"
+        }`}
+      >
+        <div className="flex-1 bg-gray-300 py-1">
+          <div className="flex justify-center items-center h-full">
+            <div className="h-full text-center flex flex-col items-center justify-center">
+              <SquareDashedMousePointer size={20} />
+              <div className="text-sm">Selection</div>
+            </div>
+            <div className="h-full text-center flex items-center justify-center hover:text-white">
+              <ChevronDown size={20} />
+            </div>
+          </div>
+        </div>
+        <div className="flex-1 bg-gray-300 py-1">
+          <div className="flex justify-center items-center h-full">
+            <div className="h-full text-center flex flex-col items-center justify-center">
+              <Image size={20} />
+              <div className="text-sm">Image</div>
+            </div>
+            <div className="h-full text-center flex items-center justify-center hover:text-white">
+              <ChevronDown size={20} />
+            </div>
+          </div>
+        </div>
+        <div className="flex-1 bg-gray-300 py-1">
+          <div className="flex justify-center items-center h-full">
+            <div className="h-full text-center flex flex-col items-center justify-center">
+              <Shapes size={20} />
+              <div className="text-sm">Shapes</div>
+            </div>
+            <div className="h-full text-center flex items-center justify-center hover:text-white">
+              <ChevronDown size={20} />
+            </div>
+          </div>
+        </div>
+        <div className="flex-1 bg-gray-300 py-1">
+          <div className="flex justify-center items-center h-full">
+            <div className="h-full text-center flex flex-col items-center justify-center">
+              <PencilRuler size={20} />
+              <div className="text-sm">Tools</div>
+            </div>
+            <div className="h-full text-center flex items-center justify-center hover:text-white">
+              <ChevronDown size={20} />
+            </div>
+          </div>
+        </div>
+        <div className="flex-1 bg-gray-300 py-1">
+          <div className="flex justify-center items-center h-full">
+            <div className="h-full text-center flex flex-col items-center justify-center">
+              <Eraser size={20} />
+              <div className="text-sm">Eraser</div>
+            </div>
+            <div className="h-full text-center flex items-center justify-center hover:text-white">
+              <ChevronDown size={20} />
+            </div>
+          </div>
+        </div>
+        <div className="flex-2 bg-gray-300 py-1">
+          <div className="flex items-center justify-center h-full">
+            <div className="text-sm transform rotate-[-90deg]">Pencils</div>
+            <div className="flex pb-1">
+              <Pencil size={30} />
+              <Pencil1 size={30} />
+              <Pencil2 size={30} />
+              <Pencil3 size={30} />
+              <Pencil4 size={30} />
+              <Pencil5 size={30} className="text-yellow-500" />
+              <Pencil6 size={30} className="text-red-600" />
+            </div>
+          </div>
+        </div>
+        <div className="flex-2 bg-gray-300 py-1">
+          <div className="flex justify-center items-center h-full">
+            <div className="text-sm transform rotate-[-90deg]">Colors</div>
+            <div className="flex items-center justify-center">
+              <div>
+                <div className="flex gap-1 py-1">
+                  <div className="w-5 h-5 rounded-full bg-gray-200"></div>
+                  <div className="w-5 h-5 rounded-full bg-lime-500"></div>
+                  <div className="w-5 h-5 rounded-full bg-yellow-500"></div>
+                  <div className="w-5 h-5 rounded-full bg-teal-500"></div>
+                  <div className="w-5 h-5 rounded-full bg-cyan-500"></div>
+                  <div className="w-5 h-5 rounded-full bg-green-500"></div>
+                  <div className="w-5 h-5 rounded-full bg-orange-500"></div>
+                </div>
+                <div className="flex gap-1 py-1">
+                  <div className="w-5 h-5 rounded-full bg-blue-500"></div>
+                  <div className="w-5 h-5 rounded-full bg-rose-500"></div>
+                  <div className="w-5 h-5 rounded-full bg-pink-500"></div>
+                  <div className="w-5 h-5 rounded-full bg-indigo-500"></div>
+                  <div className="w-5 h-5 rounded-full bg-purple-500"></div>
+                  <div className="w-5 h-5 rounded-full bg-slate-500"></div>
+                  <div className="w-5 h-5 rounded-full bg-black"></div>
+                </div>
+              </div>
+              <div className="flex-col justify-center items-center px-2 text-center">
+                <input
+                  type="color"
+                  onChange={(e) => setColor(e.target.value)}
+                  className="w-10 h-10 cursor-pointer"
+                />
+                <p className="text-xs -mt-1">Select</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="flex-1 bg-gray-300 py-1">
+          <div className="flex items-center justify-center h-full">
+            <div className="flex flex-col items-center justify-center">
+              <Smile size={20} />
+              <div className="text-sm">Emoji</div>
+            </div>
+            <div className="ml-1 hover:text-white">
+              <ChevronDown size={20} />
+            </div>
+          </div>
+        </div>
+        <div className="flex-1 bg-gray-300 py-1">
+          <div className="flex items-center justify-center h-full">
+            <div className="flex flex-col items-center justify-center">
+              <Ruler size={20} />
+              <div className="text-sm">Ruler</div>
+            </div>
+            <div className="ml-1 hover:text-white">
+              <ChevronDown size={20} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Workshop;
