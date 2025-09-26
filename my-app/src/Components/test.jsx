@@ -5,26 +5,14 @@ const CanvasDraw = () => {
   const canvasRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [ctx, setCtx] = useState(null);
-  const {
-    color,
-    brushSize,
-    drawMode,
-    setDrawMode,
-    screenTransparancy,
-    setScreenTransparancy,
-    history,
-    setHistory,
-    redoStack,
-    setRedoStack,
-    undoFn,
-    setUndoFn,
-    redoFn,
-    setRedoFn,
-  } = useContext(PageContext);
+  const { color, brushSize, drawMode, setDrawMode, screenTransparancy, setScreenTransparancy } = useContext(PageContext);
   const [screenSize, setScreenSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
   });
+
+  const [history, setHistory] = useState([]);
+  const [redoStack, setRedoStack] = useState([]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -42,17 +30,15 @@ const CanvasDraw = () => {
   useEffect(() => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
-
+    
     if (!ctx) {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
       setCtx(context);
     }
-
+    
     if (ctx) {
-      canvas.style.backgroundColor = screenTransparancy
-        ? "transparent"
-        : "white";
+      canvas.style.backgroundColor = screenTransparancy ? "transparent" : "white";
       ctx.lineCap = "round";
       ctx.lineWidth = brushSize;
       ctx.strokeStyle = color;
@@ -111,7 +97,7 @@ const CanvasDraw = () => {
     if (!isDrawing) return;
 
     if (drawMode) {
-      ctx.globalCompositeOperation = "source-over";
+      ctx.globalCompositeOperation = "source-over"; 
     } else {
       ctx.globalCompositeOperation = "destination-out";
     }
@@ -126,11 +112,6 @@ const CanvasDraw = () => {
     setIsDrawing(false);
   };
 
-  useEffect(() => {
-    setUndoFn(() => undo);
-    setRedoFn(() => redo);
-  }, []);
-  
   return (
     <div>
       <div style={{ marginBottom: "10px" }}>

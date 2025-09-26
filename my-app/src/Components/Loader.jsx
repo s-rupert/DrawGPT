@@ -16,7 +16,7 @@ function Loader() {
             }
   
             .animate-battery {
-              animation: battery 4s linear infinite;
+              animation: battery 2s linear;
             }
           `}
         </style>

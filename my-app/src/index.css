@@ -23,3 +23,6 @@
   -ms-user-select: none;
   /* For IE/Edge */
 }
+html, body {
+  overflow: hidden;
+}

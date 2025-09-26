@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Loader from "../Components/Loader";
 
 const LoadingPage = () => {
+  const [loaderStatus, setLoaderStatus] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoaderStatus(false);
+    }, 2500);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <div className="relative w-full h-full bg-white">
+    <div
+      className={`relative w-full h-full bg-white ${loaderStatus ? "" : "hidden"}`}
+    >
       <img
         src="../public/background.jpg"
         alt="Background"

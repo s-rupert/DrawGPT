@@ -11,7 +11,7 @@ function OpViewComponent() {
     const {OpView, setOpView} = useContext(PageContext);
     return (
         <div>
-            <div className="hover:text-black hover:bg-gray-400 py-1 px-3"
+            <div className="hover:text-black hover:bg-gray-400 py-1 px-3 rounded-md"
                 onClick={() => setOpView(!OpView)}>
                 View
             </div>

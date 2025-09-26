@@ -14,8 +14,8 @@ function createWindow() {
   screenSize = screen.getPrimaryDisplay().workAreaSize;
 
   win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: screenSize.width ,
+    height: screenSize.height ,
     transparent: true,
     frame: false,
     webPreferences: {
@@ -42,14 +42,16 @@ ipcMain.on("window:close", () => {
 
 ipcMain.on("window:restore", () => {
   if (isMinimized) {
-    if (win) win.setSize(screenSize.width, screenSize.height);
+    if (win) win.setSize(800, 600);
     if (win) win.center();
   } else {
-    if (win) win.setSize(800, 600);
+    if (win) win.setSize(screenSize.width, screenSize.height);
     if (win) win.center();
   }
   isMinimized = !isMinimized;
 });
+
+
 
 app.whenReady().then(() => {
   createWindow();
