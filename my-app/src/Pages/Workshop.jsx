@@ -24,6 +24,7 @@ import PencilCompUI from "../PencilComponent/PencilCompUI";
 import Shapes from "../Icons/Shapes";
 import { PageContext } from "../Components/PageContext";
 import ColorComponentUI from "../ColorComponent/ColorComponentUI";
+import Selections from "../Components/Selections";
 
 const Workshop = () => {
   const [uiInterface, setUiInterface] = useState(true);
@@ -33,8 +34,8 @@ const Workshop = () => {
     setDrawMode,
     screenTransparancy,
     setScreenTransparancy,
-    undoFn,
-    redoFn,
+    undo,
+    redo,
     history,
     redoStack,
   } = useContext(PageContext);
@@ -53,18 +54,18 @@ const Workshop = () => {
             size={30}
             className="py-1 px-1 ml-3 rounded-md hover:text-black hover:bg-gray-400"
           />
-          <Redo2
-            size={30}
-            onClick={redoFn}
-            className={`py-1 px-1 ml-3 rounded-md hover:text-black hover:bg-gray-400 ${
-              redoStack.length === 0 ? "opacity-50" : ""
-            }`}
-          />
           <Undo2
             size={30}
-            onClick={undoFn}
+            onClick={undo}
             className={`py-1 px-1 ml-3 rounded-md hover:text-black hover:bg-gray-400 ${
               history.length === 0 ? "opacity-50" : ""
+            }`}
+          />
+          <Redo2
+            size={30}
+            onClick={redo}
+            className={`py-1 px-1 ml-3 rounded-md hover:text-black hover:bg-gray-400 ${
+              redoStack.length === 0 ? "opacity-50" : ""
             }`}
           />
         </div>
@@ -107,15 +108,7 @@ const Workshop = () => {
         }`}
       >
         <div className="flex-1 bg-gray-300 py-1">
-          <div className="flex justify-center items-center h-full">
-            <div className="h-full text-center flex flex-col items-center justify-center">
-              <SquareDashedMousePointer size={20} />
-              <div className="text-sm font-semibold">Selection</div>
-            </div>
-            <div className="h-full text-center flex items-center justify-center hover:text-white">
-              <ChevronDown size={20} />
-            </div>
-          </div>
+          <Selections />
         </div>
         <div className="flex-1 bg-gray-300 py-1">
           <div className="flex justify-center items-center h-full">

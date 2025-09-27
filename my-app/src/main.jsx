@@ -7,7 +7,7 @@ import { PageProvider } from './Components/PageContext.jsx'
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <PageProvider>
-      <App />
+        <App />
     </PageProvider>
   </StrictMode>,
 )

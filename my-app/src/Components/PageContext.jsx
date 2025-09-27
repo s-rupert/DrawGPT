@@ -10,17 +10,50 @@ export const PageProvider = ({ children }) => {
   const [screenTransparancy, setScreenTransparancy] = useState(false);
 
   // Draw Controls
+  const canvasRef = useRef(null);
   const [color, setColor] = useState("#000000");
   const [brushSize, setBrushSize] = useState(5);
   const [drawMode, setDrawMode] = useState(true);
   const [history, setHistory] = useState([]);
   const [redoStack, setRedoStack] = useState([]);
-  const [undoFn, setUndoFn] = useState(() => () => {});
-  const [redoFn, setRedoFn] = useState(() => () => {});
 
   useEffect(() => {
     setDrawMode(true);
   }, [color]);
+
+  const undo = () => {
+    if (history.length === 0) return;
+
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d");
+    const previousState = history[history.length - 1];
+    setRedoStack((prev) => [...prev, canvas.toDataURL()]);
+    setHistory((prev) => prev.slice(0, -1));
+
+    const img = new Image();
+    img.src = previousState;
+    img.onload = () => {
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      context.drawImage(img, 0, 0);
+    };
+  };
+
+  const redo = () => {
+    if (redoStack.length === 0) return;
+
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d");
+    const nextState = redoStack[redoStack.length - 1];
+    setHistory((prev) => [...prev, canvas.toDataURL()]);
+    setRedoStack((prev) => prev.slice(0, -1));
+
+    const img = new Image();
+    img.src = nextState;
+    img.onload = () => {
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      context.drawImage(img, 0, 0);
+    };
+  };
 
   const FuncOption = () => {
     if (OpFile) {
@@ -59,10 +92,9 @@ export const PageProvider = ({ children }) => {
         setHistory,
         redoStack,
         setRedoStack,
-        undoFn,
-        setUndoFn,
-        redoFn,
-        setRedoFn,
+        canvasRef,
+        undo,
+        redo
       }}
     >
       {children}

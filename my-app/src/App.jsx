@@ -3,6 +3,7 @@ import "./App.css";
 import { X, Minimize, MinusIcon } from "lucide-react";
 import LoadingPage from "./Pages/LoadingPage";
 import Workshop from "./Pages/Workshop";
+import ShortCuts from "./Components/shortCuts";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -30,6 +31,7 @@ function App() {
         </div>
       </div>
       {/* <LoadingPage /> */}
+      <ShortCuts />
       <Workshop />
     </div>
   );

@@ -21,7 +21,7 @@ function OpFileComponent() {
                 onClick={() => setOpFile(!OpFile)}>
                 File
             </div>
-            <div className={`absolute text-black w-60 rounded-lg bg-gray-200 p-1 ml-2 ${OpFile ? "" : "hidden"}`}>
+            <div className={`absolute text-black w-60 rounded-lg bg-gray-200 p-1 ml-2 z-11 ${OpFile ? "" : "hidden"}`}>
                 <div className="flex justify-between items-center hover:bg-gray-100 px-2 py-1 rounded-sm">
                     <div className="flex text-sm gap-1">
                         <FilePlus size={18} />
