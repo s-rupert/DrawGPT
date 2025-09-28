@@ -19,7 +19,7 @@ const CanvasDraw = () => {
     undo,
     redo
   } = useContext(PageContext);
-  
+
   useEffect(() => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
@@ -34,6 +34,7 @@ const CanvasDraw = () => {
       canvas.style.backgroundColor = screenTransparancy
         ? "transparent"
         : "white";
+
       ctx.lineCap = "round";
       ctx.lineWidth = brushSize;
       ctx.strokeStyle = color;
