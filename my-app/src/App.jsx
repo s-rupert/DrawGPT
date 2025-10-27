@@ -10,7 +10,7 @@ function App() {
 
   return (
     <div className="border-2 border-black w-full h-screen">
-      <div className="z-auto flex flex-row w-full h-7 bg-black text-white justify-between pl-1">
+      <div className="flex flex-row w-full h-7 bg-black text-white justify-between pl-1 relative z-200">
         <h2>DrawGPT</h2>
         <div className="flex flex-row">
           <button

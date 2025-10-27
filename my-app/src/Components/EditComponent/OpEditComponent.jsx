@@ -6,7 +6,7 @@ import {
     Undo,
     Redo
 } from 'lucide-react';
-import { PageContext } from "../Components/PageContext";
+import { PageContext } from "../PageContext";
 
 function OpFileComponent() {
     const { OpEdit, setOpEdit, undo, redo,
@@ -14,11 +14,11 @@ function OpFileComponent() {
         redoStack } = useContext(PageContext);
     return (
         <div>
-            <div className="hover:text-black hover:bg-gray-400 py-1 px-3 rounded-md"
+            <div className="hover:text-black hover:bg-blue-400 py-1 px-3 rounded-md"
                 onClick={() => setOpEdit(!OpEdit)}>
                 Edit
             </div>
-            <div className={`absolute text-black w-60 rounded-lg bg-gray-200 p-1 ml-2 z-11 ${OpEdit ? "" : "hidden"}`}>
+            <div className={`absolute text-black w-60 rounded-lg bg-blue-200 p-1 ml-2 z-11 ${OpEdit ? "" : "hidden"}`}>
                 <div className="flex justify-between items-center hover:bg-gray-100 px-2 py-1 rounded-sm">
                     <div className="flex text-sm gap-1">
                         <Scissors size={18} />

@@ -2,20 +2,22 @@ import React, { useContext, useState } from "react";
 import {
     Ruler,
     Grid3x3,
-    ChevronRight
+    ChevronRight,
+    Settings2
 
 } from 'lucide-react';
-import { PageContext } from "../Components/PageContext";
+import { PageContext } from "../PageContext";
 
 function OpViewComponent() {
-    const {OpView, setOpView} = useContext(PageContext);
+    const {OpView, setOpView, statusInterface, setStatusInterface} = useContext(PageContext);
+
     return (
         <div>
-            <div className="hover:text-black hover:bg-gray-400 py-1 px-3 rounded-md"
+            <div className="hover:text-black hover:bg-blue-400 py-1 px-3 rounded-md"
                 onClick={() => setOpView(!OpView)}>
                 View
             </div>
-            <div className={`absolute text-black w-60 rounded-lg bg-gray-200 p-1 ml-2 z-11 ${OpView ? "" : "hidden"}`}>
+            <div className={`absolute text-black w-60 rounded-lg bg-blue-200 p-1 ml-2 z-11 ${OpView ? "" : "hidden"}`}>
                 <div className="flex justify-between items-center hover:bg-gray-100 px-2 py-1 rounded-sm">
                     <div className="flex text-sm gap-1">
                         <Ruler size={18} />
@@ -35,8 +37,8 @@ function OpViewComponent() {
                     </div>
                 </div>
                 <div className="flex justify-between items-center hover:bg-gray-100 px-2 py-1 rounded-sm">
-                    <div className="flex text-sm gap-1">
-                        <Grid3x3 size={18} />
+                    <div className="flex text-sm gap-1" onClick={() => setStatusInterface(!statusInterface)}>
+                        <Settings2 size={18} />
                         Status Bar
                     </div>
                     <ChevronRight />

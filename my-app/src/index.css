@@ -23,6 +23,9 @@
   -ms-user-select: none;
   /* For IE/Edge */
 }
+*{
+  box-sizing: border-box;
+}
 html, body {
   overflow: hidden;
 }

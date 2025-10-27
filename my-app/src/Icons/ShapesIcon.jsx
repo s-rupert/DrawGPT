@@ -1,6 +1,6 @@
 import { createLucideIcon } from 'lucide-react';
 
-const Shapes = createLucideIcon("Shapes", [
+const ShapesIcon = createLucideIcon("Shapes", [
   // Triangle
   ["path", { d: "M5 19l4-8 4 8z", key: "triangle" }],
   // Rectangle
@@ -9,4 +9,4 @@ const Shapes = createLucideIcon("Shapes", [
   ["circle", { cx: "6", cy: "6", r: "3", key: "circle" }],
 ]);
 
-export default Shapes;
+export default ShapesIcon;

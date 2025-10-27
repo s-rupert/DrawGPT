@@ -1,82 +1,130 @@
-import React, { useRef, useEffect, useState, useContext } from "react";
+import React, { useRef, useEffect, useState, useContext, use } from "react";
 import { PageContext } from "./PageContext";
 
 const CanvasDraw = () => {
   const [isDrawing, setIsDrawing] = useState(false);
   const [ctx, setCtx] = useState(null);
+  const [currentLine, setCurrentLine] = useState([]);
+  const scaleRef = useRef(1);
   const {
     color,
     brushSize,
-    drawMode,
-    setDrawMode,
+    actionMode,
     screenTransparancy,
-    setScreenTransparancy,
-    history,
-    setHistory,
-    redoStack,
-    setRedoStack,
+    windowSize,
     canvasRef,
-    undo,
-    redo
+    actionsRef,
+    redrawCanvas
   } = useContext(PageContext);
 
+
+  // 🔹 Initialize and update canvas context
   useEffect(() => {
     const canvas = canvasRef.current;
-    const context = canvas.getContext("2d");
+    if (!canvas) return;
+
+    const context = canvas.getContext("2d", { willReadFrequently: true });
 
     if (!ctx) {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      setCtx(context);
+      canvas.width = windowSize.width;
+      canvas.height = windowSize.height;
     }
 
-    if (ctx) {
+    if (context) {
       canvas.style.backgroundColor = screenTransparancy
         ? "transparent"
         : "white";
 
-      ctx.lineCap = "round";
-      ctx.lineWidth = brushSize;
-      ctx.strokeStyle = color;
+      context.lineCap = "round";
+      context.lineWidth = brushSize;
+      context.strokeStyle = color;
     }
+    setCtx(context);
   }, [color, brushSize, ctx, screenTransparancy]);
 
-  const saveState = () => {
+  // resize canvas when windowSize changes
+  useEffect(() => {
     const canvas = canvasRef.current;
-    setHistory((prev) => [...prev, canvas.toDataURL()]);
-    setRedoStack([]); // Clear redo stack on new action
-  };
+    if (!canvas) return;
+    
+    canvas.width = windowSize.width;
+    canvas.height = windowSize.height;
+    const context = canvas.getContext("2d", { willReadFrequently: true });
+
+    context.lineCap = "round";
+    context.lineWidth = brushSize; 
+    context.strokeStyle = color;
+    canvas.style.backgroundColor = screenTransparancy ? "transparent" : "white";
+
+    setCtx(context);
+    redrawCanvas();
+
+  }, [windowSize]);
 
 
   const startDrawing = (e) => {
     if (!ctx) return;
-    saveState(); // Save state before starting a new drawing
+    const x = e.nativeEvent.offsetX;
+    const y = e.nativeEvent.offsetY;
+
     ctx.beginPath();
-    ctx.moveTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+    ctx.moveTo(x, y);
     setIsDrawing(true);
+    setCurrentLine([{ x, y }]);
   };
 
+  // 🔹 Draw or erase while moving
   const draw = (e) => {
-    if (!isDrawing) return;
+    if (!isDrawing || !ctx) return;
 
-    if (drawMode) {
-      ctx.globalCompositeOperation = "source-over";
-    } else {
-      ctx.globalCompositeOperation = "destination-out";
-    }
+    const x = e.nativeEvent.offsetX;
+    const y = e.nativeEvent.offsetY;
 
-    ctx.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+    ctx.globalCompositeOperation =
+      actionMode === "erase" ? "destination-out" : "source-over";
+
+    ctx.lineTo(x, y);
     ctx.stroke();
+
+    // Save points to the current line
+    setCurrentLine((prev) => [...prev, { x, y }]);
   };
 
+  // 🔹 End drawing
   const endDrawing = () => {
-    if (!ctx) return;
+    if (!ctx || !isDrawing) return;
+
     ctx.closePath();
     setIsDrawing(false);
+
+    if (currentLine.length > 0) {
+      // Create payload based on mode
+      const payload =
+        actionMode === "erase"
+          ? {
+            lines: currentLine,
+            width: brushSize,
+          }
+          : {
+            lines: currentLine,
+            color: color,
+            width: brushSize,
+            tool: "pen",
+          };
+
+      // Push action into actionsRef
+      actionsRef.current.push({
+        mode: actionMode,
+        payload,
+      });
+    }
+    console.log(actionsRef.current);
+    // Clear the current line
+    setCurrentLine([]);
   };
 
-  return (
 
+  return (
     <canvas
       ref={canvasRef}
       onMouseDown={startDrawing}
