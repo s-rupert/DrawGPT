@@ -5,10 +5,9 @@ const CanvasDraw = () => {
   const [isDrawing, setIsDrawing] = useState(false);
   const [ctx, setCtx] = useState(null);
   const [currentLine, setCurrentLine] = useState([]);
-  const scaleRef = useRef(1);
   const {
     color,
-    brushSize,
+    brushConSize,
     actionMode,
     screenTransparancy,
     windowSize,
@@ -16,6 +15,11 @@ const CanvasDraw = () => {
     actionsRef,
     redrawCanvas
   } = useContext(PageContext);
+  const [brushSize, setBrushSize] = useState(brushConSize/1000)
+
+  useEffect(() => {
+    setBrushSize(brushConSize/1000)
+  },[brushConSize])
 
 
   // 🔹 Initialize and update canvas context
@@ -36,7 +40,7 @@ const CanvasDraw = () => {
         : "white";
 
       context.lineCap = "round";
-      context.lineWidth = brushSize;
+      context.lineWidth = brushSize*canvas.height;
       context.strokeStyle = color;
     }
     setCtx(context);
@@ -46,13 +50,13 @@ const CanvasDraw = () => {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    
+
     canvas.width = windowSize.width;
     canvas.height = windowSize.height;
     const context = canvas.getContext("2d", { willReadFrequently: true });
 
     context.lineCap = "round";
-    context.lineWidth = brushSize; 
+    context.lineWidth = brushSize*canvas.height;
     context.strokeStyle = color;
     canvas.style.backgroundColor = screenTransparancy ? "transparent" : "white";
 
@@ -63,23 +67,29 @@ const CanvasDraw = () => {
 
 
   const startDrawing = (e) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
     if (!ctx) return;
     const x = e.nativeEvent.offsetX;
     const y = e.nativeEvent.offsetY;
-
+    const cx = (x / canvas.width);
+    const cy = (y / canvas.height)
     ctx.beginPath();
     ctx.moveTo(x, y);
     setIsDrawing(true);
-    setCurrentLine([{ x, y }]);
+    setCurrentLine([{ cx, cy }]);
   };
 
   // 🔹 Draw or erase while moving
   const draw = (e) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
     if (!isDrawing || !ctx) return;
 
     const x = e.nativeEvent.offsetX;
     const y = e.nativeEvent.offsetY;
-
+    const cx = (x / canvas.width);
+    const cy = (y / canvas.height)
     ctx.globalCompositeOperation =
       actionMode === "erase" ? "destination-out" : "source-over";
 
@@ -87,11 +97,13 @@ const CanvasDraw = () => {
     ctx.stroke();
 
     // Save points to the current line
-    setCurrentLine((prev) => [...prev, { x, y }]);
+    setCurrentLine((prev) => [...prev, { cx, cy }]);
   };
 
   // 🔹 End drawing
   const endDrawing = () => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
     if (!ctx || !isDrawing) return;
 
     ctx.closePath();

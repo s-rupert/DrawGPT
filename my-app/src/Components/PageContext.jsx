@@ -40,11 +40,14 @@ export const PageProvider = ({ children }) => {
   const canvasRef = useRef(null);
   const actionsRef = useRef([]);
   const [color, setColor] = useState("#000000");
-  const [brushSize, setBrushSize] = useState(5);
+  const [brushConSize, setBrushConSize] = useState(5)
   const [history, setHistory] = useState([]);
   const [redoStack, setRedoStack] = useState([]);
 
+
+
   const handleAction = (context, action) => {
+    const canvas = canvasRef.current;
     const { mode, payload } = action;
 
     if (!payload?.lines || payload.lines.length === 0) return;
@@ -53,12 +56,15 @@ export const PageProvider = ({ children }) => {
     context.globalCompositeOperation =
       mode === "erase" ? "destination-out" : "source-over";
 
-    context.lineWidth = payload.width || 3;
+    context.lineWidth = (payload.width || 0.01) * canvas.height;
     context.strokeStyle = payload.color || "#000";
 
     payload.lines.forEach((point, index) => {
-      if (index === 0) context.moveTo(point.x, point.y);
-      else context.lineTo(point.x, point.y);
+      if (index === 0) {
+        context.moveTo((point.cx * canvas.width), (point.cy * canvas.height));
+      } else {
+        context.lineTo((point.cx * canvas.width), (point.cy * canvas.height));
+      }
     });
 
     context.stroke();
@@ -142,8 +148,8 @@ export const PageProvider = ({ children }) => {
         // Draw Controls
         color,
         setColor,
-        brushSize,
-        setBrushSize,
+        brushConSize,
+        setBrushConSize,
         actionMode,
         setActionMode,
         history,

@@ -7,8 +7,8 @@ const ColorComponentUI = () => {
     setDrawMode,
     color,
     setColor,
-    brushSize,
-    setBrushSize,
+    brushConSize,
+    setBrushConSize,
     brushSizeOp,
     setBrushSizeOp,
   } = useContext(PageContext);
@@ -105,16 +105,17 @@ const ColorComponentUI = () => {
                 type="range"
                 min="1"
                 max="100"
-                value={brushSize}
-                onChange={(e) => setBrushSize(Number(e.target.value))}
+                value={brushConSize}
+                onChange={(e) => setBrushConSize(Number(e.target.value))}
                 className="w-34 cursor-pointer accent-black"
               />
+
               <input
                 type="number"
                 min="1"
                 max="100"
-                value={brushSize}
-                onChange={(e) => setBrushSize(Number(e.target.value))}
+                value={brushConSize}
+                onChange={(e) => setBrushConSize(Number(e.target.value))}
                 className="w-10 text-center border-1 border-gray-700 rounded bg-white"
               />
             </div>
