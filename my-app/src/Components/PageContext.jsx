@@ -9,6 +9,8 @@ export const PageProvider = ({ children }) => {
   const [OpFile, setOpFile] = useState(false);
   const [OpEdit, setOpEdit] = useState(false);
   const [OpView, setOpView] = useState(false);
+  const [isSettingOpen, setIsSettingOpen] = useState(false);
+  const [isPersonalizeOpen, setIsPersonalizeOpen] = useState(false);
   const [brushSizeOp, setBrushSizeOp] = useState(false);
   const [screenTransparancy, setScreenTransparancy] = useState(false);
   const [sizeOptionIsOpen, setSizeOptionIsOpen] = useState(false);
@@ -116,6 +118,10 @@ export const PageProvider = ({ children }) => {
       setBrushSizeOp(false);
     } else if (sizeOptionIsOpen) {
       setSizeOptionIsOpen(false);
+    } else if (isPersonalizeOpen) {
+      setIsPersonalizeOpen(false);
+    } else if (isSettingOpen) {
+      setIsSettingOpen(false);
     }
   };
 
@@ -129,6 +135,10 @@ export const PageProvider = ({ children }) => {
         OpView,
         setOpView,
         FuncOption,
+        isSettingOpen,
+        setIsSettingOpen,
+        isPersonalizeOpen,
+        setIsPersonalizeOpen,
         brushSizeOp,
         setBrushSizeOp,
         screenTransparancy,

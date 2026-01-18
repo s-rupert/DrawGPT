@@ -7,7 +7,6 @@ import {
   ChevronDown,
   ChevronUp,
   UserRound,
-  Settings,
   Image,
   SquareDashedMousePointer,
   PencilRuler,
@@ -30,8 +29,10 @@ import PencilCompUI from "../Components/PencilComponent/PencilCompUI";
 import ShapesIcon from "../Icons/ShapesIcon";
 import { PageContext } from "../Components/PageContext";
 import ColorComponentUI from "../Components/ColorComponent/ColorComponentUI";
+import FormatComponentUI from "../Components/FormatComponent/FormatUI";
 import Selections from "../Components/SelectionComponent/Selections";
 import Shapes from "../Components/ShapesComponent/Shapes";
+import SettingComponentUI from "../Components/SettingComponent/SettingComponentUI";
 
 const Workshop = () => {
   const {
@@ -53,11 +54,14 @@ const Workshop = () => {
     windowSize,
     setWindowSize,
     screenSize,
-    setScreenSize
+    setScreenSize,
   } = useContext(PageContext);
   const [shrink, setShrink] = useState(false);
   return (
-    <div className="relative w-full h-full bg-blue-100" onClick={() => FuncOption()}>
+    <div
+      className="relative w-full h-full bg-blue-100"
+      onClick={() => FuncOption()}
+    >
       <div className="absolute flex items-center justify-center w-full h-full z-0 overflow-auto">
         <div className="flex items-center justify-center min-w-full min-h-full">
           <CanvasDraw className="border-1" />
@@ -79,41 +83,48 @@ const Workshop = () => {
           <Undo2
             size={30}
             onClick={undo}
-            className={`py-1 px-1 ml-3 rounded-md hover:text-black hover:bg-blue-400 ${history.length === 0 ? "opacity-50" : ""
-              }`}
+            className={`py-1 px-1 ml-3 rounded-md hover:text-black hover:bg-blue-400 ${
+              history.length === 0 ? "opacity-50" : ""
+            }`}
           />
           <Redo2
             size={30}
             onClick={redo}
-            className={`py-1 px-1 ml-3 rounded-md hover:text-black hover:bg-blue-400 ${redoStack.length === 0 ? "opacity-50" : ""
-              }`}
+            className={`py-1 px-1 ml-3 rounded-md hover:text-black hover:bg-blue-400 ${
+              redoStack.length === 0 ? "opacity-50" : ""
+            }`}
           />
         </div>
         <div className="flex flex-row h-8 text-white items-center">
-          <div onClick={() => {
-            setUiInterface(!uiInterface)
-            if (!statusInterface && !uiInterface) {
-              setStatusInterface(true);
-            }else {
-              setStatusInterface(false);
-            }
-          }}>
+          <div
+            onClick={() => {
+              setUiInterface(!uiInterface);
+              if (!statusInterface && !uiInterface) {
+                setStatusInterface(true);
+              } else {
+                setStatusInterface(false);
+              }
+            }}
+          >
             <ChevronDown
               size={30}
-              className={`rounded-md hover:text-black hover:bg-blue-400 py-1 px-1 ml-3 ${uiInterface ? "" : "hidden"
-                }`}
+              className={`rounded-md hover:text-black hover:bg-blue-400 py-1 px-1 ml-3 ${
+                uiInterface ? "" : "hidden"
+              }`}
             />
             <ChevronUp
               size={30}
-              className={`rounded-md hover:text-black hover:bg-blue-400 py-1 px-1 ml-3 ${uiInterface ? "hidden" : ""
-                }`}
+              className={`rounded-md hover:text-black hover:bg-blue-400 py-1 px-1 ml-3 ${
+                uiInterface ? "hidden" : ""
+              }`}
             />
           </div>
           <div
-            className={`rounded-md hover:text-black hover:bg-blue-400 py-1 px-3 ${screenTransparancy ? "bg-gray-400" : ""
-              }`}
+            className={`rounded-md hover:text-black hover:bg-blue-400 py-1 px-3 ${
+              screenTransparancy ? "bg-gray-400" : ""
+            }`}
             onClick={() => {
-              setScreenTransparancy(!screenTransparancy)
+              setScreenTransparancy(!screenTransparancy);
             }}
           >
             Transparent
@@ -122,15 +133,13 @@ const Workshop = () => {
             size={30}
             className="rounded-md hover:text-black hover:bg-blue-400 py-1 px-1 ml-3"
           />
-          <Settings
-            size={30}
-            className="rounded-md hover:text-black hover:bg-blue-400 py-1 px-1 ml-3"
-          />
+          <SettingComponentUI />
         </div>
       </div>
       <div
-        className={`bg-blue-300 flex px-2 relative ${uiInterface ? "block" : "hidden"
-          }`}
+        className={`bg-blue-300 flex px-2 relative ${
+          uiInterface ? "block" : "hidden"
+        }`}
       >
         <div className="py-1 px-2">
           <Selections />
@@ -143,10 +152,11 @@ const Workshop = () => {
             <Image size={30} className="p-1 hover:p-[2px]" />
             <Eraser
               size={30}
-              className={`p-1 ${actionMode === "draw"
-                ? "hover:p-[2px]"
-                : "p-0 border-1 border-gray-500 rounded-lg"
-                }`}
+              className={`p-1 ${
+                actionMode === "draw"
+                  ? "hover:p-[2px]"
+                  : "p-0 border-1 border-gray-500 rounded-lg"
+              }`}
               onClick={() => {
                 if (actionMode !== "erase") {
                   setActionMode("erase");
@@ -161,7 +171,6 @@ const Workshop = () => {
             <Pipette size={30} className="p-1 hover:p-[2px]" />
             <ZoomIn size={30} className="p-1 hover:p-[2px]" />
             <PaintBucket size={30} className="p-1 hover:p-[2px]" />
-
           </div>
         </div>
 
@@ -182,19 +191,36 @@ const Workshop = () => {
         </div>
 
         <div className="bg-black border-1 my-3 opacity-50" />
-
+        <div className="py-1 px-5">
+          <FormatComponentUI />
+        </div>
       </div>
 
-      <div className={`absolute bottom-6 flex items-center justify-between bg-blue-300 w-full px-3 rounded-lg ${statusInterface ? "" : "hidden"}`}>
+      <div
+        className={`absolute bottom-6 flex items-center justify-between bg-blue-300 w-full px-3 rounded-lg ${
+          statusInterface ? "" : "hidden"
+        }`}
+      >
         <div className="flex items-center gap-[1vw]">
           <div className="w-6 h-6 rounded border-1"></div>
-          <p className="opacity-60">{Math.round(windowSize.width)} × {Math.round(windowSize.height)}</p>
+          <p className="opacity-60">
+            {Math.round(windowSize.width)} × {Math.round(windowSize.height)}
+          </p>
         </div>
 
         <div className="flex items-center gap-[1vw]">
-          <div className="p-[1px] border-1 rounded-lg hover:bg-blue-400 cursor-pointer m-[5px]" onClick={() => setShrink(!shrink)}>
-            <Shrink className={`${shrink ? "hidden" : ""}`} onClick={() => setScreenSize(70)} />
-            <Expand className={`${shrink ? "" : "hidden"}`} onClick={() => setScreenSize(100)} />
+          <div
+            className="p-[1px] border-1 rounded-lg hover:bg-blue-400 cursor-pointer m-[5px]"
+            onClick={() => setShrink(!shrink)}
+          >
+            <Shrink
+              className={`${shrink ? "hidden" : ""}`}
+              onClick={() => setScreenSize(70)}
+            />
+            <Expand
+              className={`${shrink ? "" : "hidden"}`}
+              onClick={() => setScreenSize(100)}
+            />
           </div>
           <div className="flex items-center border rounded-lg overflow-hidden">
             <input
@@ -231,25 +257,82 @@ const Workshop = () => {
            focus:outline-none"
             />
             <span className="-ml-6 text-sm">%</span>
-            <ChevronDown size={18} className="mx-1 hover:text-white" onClick={() => setSizeOptionIsOpen(!sizeOptionIsOpen)} />
-            <div className={`absolute bottom-10 bg-blue-200 text-black rounded-lg shadow-lg ${sizeOptionIsOpen ? 'block' : 'hidden'}`}>
-              <div className="hover:bg-blue-400 px-4 py-1 rounded-lg" onClick={() => setScreenSize(25)}>25%</div>
-              <div className="hover:bg-blue-400 px-4 py-1 rounded-lg" onClick={() => setScreenSize(50)}>50%</div>
-              <div className="hover:bg-blue-400 px-4 py-1 rounded-lg" onClick={() => setScreenSize(75)}>75%</div>
-              <div className="hover:bg-blue-400 px-4 py-1 rounded-lg" onClick={() => setScreenSize(100)}>100%</div>
-              <div className="hover:bg-blue-400 px-4 py-1 rounded-lg" onClick={() => setScreenSize(125)}>125%</div>
-              <div className="hover:bg-blue-400 px-4 py-1 rounded-lg" onClick={() => setScreenSize(150)}>150%</div>
-              <div className="hover:bg-blue-400 px-4 py-1 rounded-lg" onClick={() => setScreenSize(175)}>175%</div>
-              <div className="hover:bg-blue-400 px-4 py-1 rounded-lg" onClick={() => setScreenSize(200)}>200%</div>
-              <div className="hover:bg-blue-400 px-4 py-1 rounded-lg" onClick={() => setScreenSize(250)}>250%</div>
+            <ChevronDown
+              size={18}
+              className="mx-1 hover:text-white"
+              onClick={() => setSizeOptionIsOpen(!sizeOptionIsOpen)}
+            />
+            <div
+              className={`absolute bottom-10 bg-blue-200 text-black rounded-lg shadow-lg ${
+                sizeOptionIsOpen ? "block" : "hidden"
+              }`}
+            >
+              <div
+                className="hover:bg-blue-400 px-4 py-1 rounded-lg"
+                onClick={() => setScreenSize(25)}
+              >
+                25%
+              </div>
+              <div
+                className="hover:bg-blue-400 px-4 py-1 rounded-lg"
+                onClick={() => setScreenSize(50)}
+              >
+                50%
+              </div>
+              <div
+                className="hover:bg-blue-400 px-4 py-1 rounded-lg"
+                onClick={() => setScreenSize(75)}
+              >
+                75%
+              </div>
+              <div
+                className="hover:bg-blue-400 px-4 py-1 rounded-lg"
+                onClick={() => setScreenSize(100)}
+              >
+                100%
+              </div>
+              <div
+                className="hover:bg-blue-400 px-4 py-1 rounded-lg"
+                onClick={() => setScreenSize(125)}
+              >
+                125%
+              </div>
+              <div
+                className="hover:bg-blue-400 px-4 py-1 rounded-lg"
+                onClick={() => setScreenSize(150)}
+              >
+                150%
+              </div>
+              <div
+                className="hover:bg-blue-400 px-4 py-1 rounded-lg"
+                onClick={() => setScreenSize(175)}
+              >
+                175%
+              </div>
+              <div
+                className="hover:bg-blue-400 px-4 py-1 rounded-lg"
+                onClick={() => setScreenSize(200)}
+              >
+                200%
+              </div>
+              <div
+                className="hover:bg-blue-400 px-4 py-1 rounded-lg"
+                onClick={() => setScreenSize(250)}
+              >
+                250%
+              </div>
             </div>
           </div>
-          <input type="range" min="25" max="250" className="w-32 cursor-pointer accent-blue-600"
+          <input
+            type="range"
+            min="25"
+            max="250"
+            className="w-32 cursor-pointer accent-blue-600"
             value={screenSize}
-            onChange={(e) => setScreenSize(Number(e.target.value))} />
+            onChange={(e) => setScreenSize(Number(e.target.value))}
+          />
         </div>
       </div>
-
     </div>
   );
 };
